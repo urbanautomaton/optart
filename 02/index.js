@@ -1,8 +1,22 @@
+const width = 800;
+const height = 900;
+const tileSize = 10;
+
 const truchet = document.getElementById("truchet-image");
 const context = truchet.getContext("2d");
-truchet.width = 500;
-truchet.height = 500;
-const tileSize = 20;
+const imageSource = document.getElementById("tom");
+const imageCanvas = document.getElementById("image-canvas");
+const imageContext = imageCanvas.getContext("2d");
+
+imageContext.drawImage(imageSource, 0, 0, width, height);
+
+const scale = window.devicePixelRatio;
+truchet.style.width = `${width}px`;
+truchet.style.height = `${height}px`;
+truchet.width = Math.floor(width * scale);
+truchet.height = Math.floor(height * scale);
+
+context.scale(scale, scale);
 
 const rotations = {
   a: 0,
@@ -11,10 +25,18 @@ const rotations = {
   d: (Math.PI * 3) / 2,
 };
 
-const generator = [
-  ["b", "a"],
-  ["c", "d"],
+const generators = [
+  [
+    ["b", "a"],
+    ["c", "d"],
+  ],
+  [
+    ["c", "a"],
+    ["a", "c"],
+  ],
 ];
+
+const generator = generators[Math.floor(Math.random() * generators.length)];
 const generatorX = generator[0].length;
 const generatorY = generator.length;
 
@@ -48,10 +70,15 @@ const drawTile = (label, x, y, t) => {
   }
 };
 
-for (var i = 0; i <= 25; i++) {
-  for (var j = 0; j <= 25; j++) {
+for (var i = 0; i <= width / tileSize; i++) {
+  for (var j = 0; j <= height / tileSize; j++) {
     const tileLabel = generator[j % generatorY][i % generatorX];
+    const x = i * tileSize;
+    const y = j * tileSize;
+    const tileData = imageContext.getImageData(x, y, tileSize, tileSize).data;
+    const t =
+      Array.from(tileData).reduce((a, b) => a + b) / (tileData.length * 255);
 
-    drawTile(tileLabel, i * tileSize, j * tileSize, Math.random());
+    drawTile(tileLabel, x, y, t);
   }
 }
