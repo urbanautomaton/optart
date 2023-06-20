@@ -18,13 +18,6 @@ truchet.height = Math.floor(height * scale);
 
 context.scale(scale, scale);
 
-const rotations = {
-  a: 0,
-  b: Math.PI / 2,
-  c: Math.PI,
-  d: (Math.PI * 3) / 2,
-};
-
 const generators = [
   // non-touching
   [
@@ -77,7 +70,7 @@ const drawBase = (x, y, t) => {
 };
 
 const drawTile = (label, x, y, t) => {
-  const rotation = rotations[label];
+  const rotation = (["a", "b", "c", "d"].indexOf(label) * Math.PI) / 2;
   const centerX = x + tileSize / 2;
   const centerY = y + tileSize / 2;
 
