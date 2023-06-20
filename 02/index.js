@@ -6,7 +6,7 @@ const truchet = document.getElementById("truchet-image");
 const context = truchet.getContext("2d");
 const imageSource = document.getElementById("tom");
 const imageCanvas = document.getElementById("image-canvas");
-const imageContext = imageCanvas.getContext("2d");
+const imageContext = imageCanvas.getContext("2d", { willReadFrequently: true });
 
 imageContext.drawImage(imageSource, 0, 0, width, height);
 
