@@ -26,13 +26,37 @@ const rotations = {
 };
 
 const generators = [
+  // non-touching
   [
     ["b", "a"],
     ["c", "d"],
   ],
+  // wigglies
   [
     ["c", "a"],
     ["a", "c"],
+  ],
+  // opposite wigglies
+  [
+    ["b", "d"],
+    ["d", "b"],
+  ],
+  // circles
+  [
+    ["b", "c"],
+    ["a", "d"],
+  ],
+  // rotating barbells
+  [
+    ["c", "b", "a", "d"],
+    ["d", "a", "b", "c"],
+    ["a", "d", "c", "b"],
+    ["b", "c", "d", "a"],
+  ],
+  // chevrons
+  [
+    ["d", "a", "b", "c"],
+    ["b", "c", "d", "a"],
   ],
 ];
 
