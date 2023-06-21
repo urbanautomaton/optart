@@ -17,6 +17,21 @@ truchet.height = Math.floor(height * scale);
 context.scale(scale, scale);
 
 const generators = [
+  // diamonds
+  [
+    ["b", "d", "b", "d", "a", "c", "a", "c"],
+    ["d", "b", "d", "b", "c", "a", "c", "a"],
+    ["b", "d", "b", "d", "a", "c", "a", "c"],
+    ["d", "b", "d", "b", "c", "a", "c", "a"],
+    ["c", "a", "c", "a", "d", "b", "d", "b"],
+    ["a", "c", "a", "c", "b", "d", "b", "d"],
+    ["c", "a", "c", "a", "d", "b", "d", "b"],
+    ["a", "c", "a", "c", "b", "d", "b", "d"],
+  ],
+  [
+    // arrers
+    ["d", "a", "b", "c"],
+  ],
   // non-touching
   [
     ["b", "a"],
