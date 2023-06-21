@@ -8,8 +8,6 @@ const imageSource = document.getElementById("tom");
 const imageCanvas = document.getElementById("image-canvas");
 const imageContext = imageCanvas.getContext("2d", { willReadFrequently: true });
 
-imageContext.drawImage(imageSource, 0, 0, width, height);
-
 const scale = window.devicePixelRatio;
 truchet.style.width = `${width}px`;
 truchet.style.height = `${height}px`;
@@ -87,15 +85,24 @@ const drawTile = (label, x, y, t) => {
   }
 };
 
-for (var i = 0; i <= width / tileSize; i++) {
-  for (var j = 0; j <= height / tileSize; j++) {
-    const tileLabel = generator[j % generatorY][i % generatorX];
-    const x = i * tileSize;
-    const y = j * tileSize;
-    const tileData = imageContext.getImageData(x, y, tileSize, tileSize).data;
-    const t =
-      Array.from(tileData).reduce((a, b) => a + b) / (tileData.length * 255);
+const main = () => {
+  for (var i = 0; i <= width / tileSize; i++) {
+    for (var j = 0; j <= height / tileSize; j++) {
+      const tileLabel = generator[j % generatorY][i % generatorX];
+      const x = i * tileSize;
+      const y = j * tileSize;
+      const tileData = imageContext.getImageData(x, y, tileSize, tileSize).data;
+      const t =
+        Array.from(tileData).reduce((a, b) => a + b) / (tileData.length * 255);
 
-    drawTile(tileLabel, x, y, t);
+      drawTile(tileLabel, x, y, t);
+    }
   }
-}
+};
+
+imageSource.addEventListener("load", function () {
+  imageContext.drawImage(imageSource, 0, 0, width, height);
+
+  main();
+});
+imageSource.src = "tom_waits.png";
