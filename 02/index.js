@@ -19,50 +19,54 @@ context.scale(scale, scale);
 const generators = [
   // diamonds
   [
-    ["b", "d", "b", "d", "a", "c", "a", "c"],
-    ["d", "b", "d", "b", "c", "a", "c", "a"],
-    ["b", "d", "b", "d", "a", "c", "a", "c"],
-    ["d", "b", "d", "b", "c", "a", "c", "a"],
-    ["c", "a", "c", "a", "d", "b", "d", "b"],
-    ["a", "c", "a", "c", "b", "d", "b", "d"],
-    ["c", "a", "c", "a", "d", "b", "d", "b"],
-    ["a", "c", "a", "c", "b", "d", "b", "d"],
+    "bdbdacac",
+    "dbdbcaca",
+    "bdbdacac",
+    "dbdbcaca",
+    "cacadbdb",
+    "acacbdbd",
+    "cacadbdb",
+    "acacbdbd",
   ],
-  [
-    // arrers
-    ["d", "a", "b", "c"],
-  ],
+  // arrers
+  ["dabc"],
   // non-touching
+  // prettier-ignore
   [
-    ["b", "a"],
-    ["c", "d"],
+    "ba",
+    "cd"
   ],
   // wigglies
+  // prettier-ignore
   [
-    ["c", "a"],
-    ["a", "c"],
+    "ca",
+    "ac"
   ],
   // opposite wigglies
+  // prettier-ignore
   [
-    ["b", "d"],
-    ["d", "b"],
+    "bd",
+    "db"
   ],
   // circles
+  // prettier-ignore
   [
-    ["b", "c"],
-    ["a", "d"],
+    "bc",
+    "ad"
   ],
   // rotating barbells
+  // prettier-ignore
   [
-    ["c", "b", "a", "d"],
-    ["d", "a", "b", "c"],
-    ["a", "d", "c", "b"],
-    ["b", "c", "d", "a"],
+    "cbad",
+    "dabc",
+    "adcb",
+    "bcda"
   ],
   // chevrons
+  // prettier-ignore
   [
-    ["d", "a", "b", "c"],
-    ["b", "c", "d", "a"],
+    "dabc",
+    "bcda"
   ],
 ];
 
