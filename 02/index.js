@@ -1,5 +1,3 @@
-const width = 800;
-const height = 900;
 const tileSize = 10;
 
 const truchet = document.getElementById("truchet-image");
@@ -9,12 +7,6 @@ const imageCanvas = document.getElementById("image-canvas");
 const imageContext = imageCanvas.getContext("2d", { willReadFrequently: true });
 
 const scale = window.devicePixelRatio;
-truchet.style.width = `${width}px`;
-truchet.style.height = `${height}px`;
-truchet.width = Math.floor(width * scale);
-truchet.height = Math.floor(height * scale);
-
-context.scale(scale, scale);
 
 const generators = [
   // diamonds
@@ -70,10 +62,6 @@ const generators = [
   ],
 ];
 
-const generator = generators[Math.floor(Math.random() * generators.length)];
-const generatorX = generator[0].length;
-const generatorY = generator.length;
-
 const drawBase = (x, y, t) => {
   const delta = tileSize * (0.75 - 0.5 * t);
 
@@ -104,7 +92,29 @@ const drawTile = (label, x, y, t) => {
   }
 };
 
-const main = () => {
+const resizeCanvases = (width, height) => {
+  truchet.style.width = `${width}px`;
+  truchet.style.height = `${height}px`;
+  truchet.width = Math.floor(width * scale);
+  truchet.height = Math.floor(height * scale);
+  imageCanvas.width = width;
+  imageCanvas.height = height;
+  context.scale(scale, scale);
+};
+
+const renderTiledImage = (image) => {
+  const width = 800;
+  const height = (image.height * 800) / image.width;
+
+  resizeCanvases(width, height);
+
+  imageContext.drawImage(image, 0, 0, width, height);
+
+  context.clearRect(0, 0, width, height);
+  const generator = generators[Math.floor(Math.random() * generators.length)];
+  const generatorX = generator[0].length;
+  const generatorY = generator.length;
+
   for (var i = 0; i <= width / tileSize; i++) {
     for (var j = 0; j <= height / tileSize; j++) {
       const tileLabel = generator[j % generatorY][i % generatorX];
@@ -119,9 +129,58 @@ const main = () => {
   }
 };
 
-imageSource.addEventListener("load", function () {
-  imageContext.drawImage(imageSource, 0, 0, width, height);
+const imageInput = document.getElementById("image-input");
+imageInput.addEventListener("change", async () => {
+  const file = imageInput.files[0];
 
-  main();
+  if (file) {
+    const bitmap = await createImageBitmap(file);
+    renderTiledImage(bitmap);
+  }
+
+  false;
+});
+
+const imagePicker = document.getElementById("image-picker");
+imagePicker.addEventListener("click", () => {
+  imageInput.click();
+
+  false;
+});
+
+const dropper = document.getElementById("image-dropper");
+dropper.addEventListener("dragover", (event) => {
+  event.stopPropagation();
+  event.preventDefault();
+
+  false;
+});
+dropper.addEventListener("drop", async (event) => {
+  event.stopPropagation();
+  event.preventDefault();
+  let file;
+
+  if (event.dataTransfer.items) {
+    const item = event.dataTransfer.items[0];
+    if (item.kind !== "file") {
+      return;
+    }
+    file = item.getAsFile();
+  } else {
+    file = event.dataTransfer.files[0];
+  }
+
+  if (!/image/.test(file.type)) {
+    return;
+  }
+
+  const bitmap = await createImageBitmap(file);
+  renderTiledImage(bitmap);
+
+  false;
+});
+
+imageSource.addEventListener("load", () => {
+  renderTiledImage(imageSource);
 });
 imageSource.src = "tom_waits.png";
